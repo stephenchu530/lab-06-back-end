@@ -14,17 +14,17 @@ app.get('/hello', (request, response) => {
 });
 
 app.get('/location', (request, response) => {
-  let res = response.send(request.query);
-  console.log(res);
   let locationData = require('./data/geo.json');
   if (locationData['status'] === 'OK') {
-    // let test = new LocationResponseObj(request.key1, locationData);
+    let responseData = new LocationResponseObj(request.query.data, locationData);
+    response.status(200).send(responseData);
+  } else {
+    response.status(400);
   }
-  // response.status(200).json('yes');
 });
 
 app.get('/weather', (request, response) => {
-  response.status(200).json(airplanes);
+  //response.status(200).json(airplanes);
 });
 
 
@@ -32,8 +32,8 @@ app.use('*', (request, response) => response.send('Sorry, that route does not ex
 
 app.listen(PORT,() => console.log(`Listening on port ${PORT}`));
 
-let LocationResponseObj = function(request, jsonData) {
-  this.searchQuery = request;
+let LocationResponseObj = function(searchQuery, jsonData) {
+  this.searchQuery = searchQuery;
   this.formattedQuery = jsonData['results'][0]['formatted_address'];
   this.latitude = jsonData['results'][0]['geometry']['location']['lat'];
   this.longitude = jsonData['results'][0]['geometry']['location']['lng'];
