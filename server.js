@@ -26,9 +26,6 @@ app.get('/location', (request, response) => {
 });
 
 app.get('/weather', (request, response) => {
-  // const lat = request.query.data.latitude;
-  // const lng = request.query.data.longitude;
-
   try {
     const weatherData = require('./data/darksky.json');
     const weatherObj = new Weather(weatherData);
@@ -65,7 +62,7 @@ const Weather = function(jsonData) {
 
   forecastSummary.forEach(forecast => {
     const summary = forecast['summary'];
-    const time = Date(forecast['time']).split(' ').slice(0, 4).join(' ');
+    const time = (new Date(forecast['time'] * 1000)).toDateString();
 
     this.dailyForecast.push({
       'forecast': summary,
