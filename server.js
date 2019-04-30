@@ -7,7 +7,6 @@ const cors = require('cors');
 const PORT = process.env.PORT || 3000;
 
 app.use(cors());
-//app.use(express.static('./public'));
 
 app.get('/hello', (request, response) => {
   response.status(200).send('Hello');
@@ -15,16 +14,18 @@ app.get('/hello', (request, response) => {
 
 app.get('/location', (request, response) => {
   let locationData = require('./data/geo.json');
-  if (locationData['status'] === 'OK') {
-    let responseData = new LocationResponseObj(request.query.data, locationData);
-    response.status(200).send(responseData);
-  } else {
-    response.status(400);
-  }
+  let locationObj = new Location(request.query.data, locationData);
+  response.status(200).send(locationObj);
 });
 
 app.get('/weather', (request, response) => {
-  //response.status(200).json(airplanes);
+  const weatherData = require('./data/darksky.json');
+  // const lat = request.query.data.latitude;
+  // const lng = request.query.data.longitude;
+
+  const weatherObj = new Weather(weatherData);
+
+  response.status(200).send(weatherObj.dailyForecast);
 });
 
 
@@ -32,9 +33,29 @@ app.use('*', (request, response) => response.send('Sorry, that route does not ex
 
 app.listen(PORT,() => console.log(`Listening on port ${PORT}`));
 
-let LocationResponseObj = function(searchQuery, jsonData) {
+const Location = function(searchQuery, jsonData) {
+  const formattedQuery = jsonData['results'][0]['formatted_address'];
+  const latitude = jsonData['results'][0]['geometry']['location']['lat'];
+  const longitude = jsonData['results'][0]['geometry']['location']['lng'];
+
   this.searchQuery = searchQuery;
-  this.formattedQuery = jsonData['results'][0]['formatted_address'];
-  this.latitude = jsonData['results'][0]['geometry']['location']['lat'];
-  this.longitude = jsonData['results'][0]['geometry']['location']['lng'];
+  this.formattedQuery = formattedQuery;
+  this.latitude = latitude;
+  this.longitude = longitude;
+};
+
+const Weather = function(jsonData) {
+  const forecastSummary = jsonData['daily']['data'];
+
+  this.dailyForecast = [];
+
+  forecastSummary.forEach(forecast => {
+    const summary = forecast['summary'];
+    const time = Date(forecast['time']).split(' ').slice(0, 4).join(' ');
+
+    this.dailyForecast.push({
+      'forecast': summary,
+      'time': time,
+    });
+  });
 };
