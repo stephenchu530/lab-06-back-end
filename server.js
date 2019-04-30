@@ -13,19 +13,33 @@ app.get('/hello', (request, response) => {
 });
 
 app.get('/location', (request, response) => {
-  let locationData = require('./data/geo.json');
-  let locationObj = new Location(request.query.data, locationData);
-  response.status(200).send(locationObj);
+  try {
+    const locationData = require('./data/geo.json');
+    const locationObj = new Location(request.query.data, locationData);
+
+    response.status(200).send(locationObj);
+  } catch (error) {
+    const errorResponse500 = {'status': 500, 'responseText': 'Sorry, something went wrong' };
+
+    response.status(500).send(errorResponse500);
+  }
 });
 
 app.get('/weather', (request, response) => {
-  const weatherData = require('./data/darksky.json');
   // const lat = request.query.data.latitude;
   // const lng = request.query.data.longitude;
+  
+  try {
+    const weatherData = require('./data/darksky.json');
+    const weatherObj = new Weather(weatherData);
 
-  const weatherObj = new Weather(weatherData);
+    response.status(200).send(weatherObj.dailyForecast);
+  } catch (error) {
+    const errorResponse500 = {'status': 500, 'responseText': 'Sorry, something went wrong' };
 
-  response.status(200).send(weatherObj.dailyForecast);
+    response.status(500).send(errorResponse500);
+  }
+
 });
 
 
