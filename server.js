@@ -11,18 +11,15 @@ app.use(express.static('./public'));
 app.get('/hello', (request, response) => {
   response.status(200).send('Hello');
 });
-// app.get('/isitworking', (request, response) => {
-// . response.send('yes');
-// });
 
-app.get('/data', (request, response) => {
-  let airplanes = {
-    departure: Date.now(),
-    canFly: true,
-    pilot: 'Well Trained'
-  };
+app.get('/location', (request, response) => {
   response.status(200).json(airplanes);
 });
+
+app.get('/weather', (request, response) => {
+  response.status(200).json(airplanes);
+});
+
 
 app.use('*', (request, response) => response.send('Sorry, that route does not exist.'));
 
