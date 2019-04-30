@@ -5,17 +5,17 @@
 City Explorer backend app
 
 ## Time Estimation
-```
-Number and name of feature: ________________________________
 
-Estimate of time needed to complete: _____
+  Number and name of feature: Locations, Weather, and Errors
 
-Start time: _____
+  Estimate of time needed to complete: 4 hours
 
-Finish time: _____
+  Start time: 0900
 
-Actual time needed to complete: _____
-```
+  Finish time: 1300
+
+  Actual time needed to complete: 4 hours
+
 
 ## Installation:
 From the terminal, run one of the following to make a local copy:
