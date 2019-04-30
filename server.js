@@ -28,7 +28,7 @@ app.get('/location', (request, response) => {
 app.get('/weather', (request, response) => {
   // const lat = request.query.data.latitude;
   // const lng = request.query.data.longitude;
-  
+
   try {
     const weatherData = require('./data/darksky.json');
     const weatherObj = new Weather(weatherData);
