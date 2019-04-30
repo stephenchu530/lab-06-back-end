@@ -24,8 +24,14 @@ app.get('/weather', (request, response) => {
   // const lng = request.query.data.longitude;
 
   const weatherObj = new Weather(weatherData);
+  try {
+    response.status(200).send(weatherObj.dailyForecast);
+  } catch (error) {
+    const errorResponse500 = {'status': 500, 'responseText': 'Sorry, something went wrong' };
 
-  response.status(200).send(weatherObj.dailyForecast);
+    response.status(500).send(errorResponse500);
+  }
+
 });
 
 
