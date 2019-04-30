@@ -3,9 +3,10 @@
 require('dotenv').config();
 const express = require('express');
 const app = express();
-
+const cors = require('cors');
 const PORT = process.env.PORT || 3000;
 
+app.use(cors());
 app.use(express.static('./public'));
 
 app.get('/hello', (request, response) => {
@@ -13,7 +14,8 @@ app.get('/hello', (request, response) => {
 });
 
 app.get('/location', (request, response) => {
-  response.status(200).json(airplanes);
+  let test = require('data/geo.json');
+  response.status(200).json('hi');
 });
 
 app.get('/weather', (request, response) => {
