@@ -19,13 +19,13 @@ app.get('/location', (request, response) => {
 });
 
 app.get('/weather', (request, response) => {
-  let weatherData = require('./data/darksky.json');
-  let lat = request.query.data.latitude;
-  let lng = request.query.data.longitude;
-  console.log(lat, lng);
-  let weatherObj = new Weather(weatherData);
-  console.log(weatherObj);
-  response.status(200).send(weatherObj);
+  const weatherData = require('./data/darksky.json');
+  // const lat = request.query.data.latitude;
+  // const lng = request.query.data.longitude;
+
+  const weatherObj = new Weather(weatherData);
+
+  response.status(200).send(weatherObj.dailyForecast);
 });
 
 
@@ -33,21 +33,29 @@ app.use('*', (request, response) => response.send('Sorry, that route does not ex
 
 app.listen(PORT,() => console.log(`Listening on port ${PORT}`));
 
-let Location = function(searchQuery, jsonData) {
+const Location = function(searchQuery, jsonData) {
+  const formattedQuery = jsonData['results'][0]['formatted_address'];
+  const latitude = jsonData['results'][0]['geometry']['location']['lat'];
+  const longitude = jsonData['results'][0]['geometry']['location']['lng'];
+
   this.searchQuery = searchQuery;
-  this.formattedQuery = jsonData['results'][0]['formatted_address'];
-  this.latitude = jsonData['results'][0]['geometry']['location']['lat'];
-  this.longitude = jsonData['results'][0]['geometry']['location']['lng'];
+  this.formattedQuery = formattedQuery;
+  this.latitude = latitude;
+  this.longitude = longitude;
 };
 
-let Weather = function(jsonData) {
+const Weather = function(jsonData) {
+  const forecastSummary = jsonData['daily']['data'];
+
   this.dailyForecast = [];
-  jsonData['daily']['data'].forEach(forecast => {
-    let summary = forcast['summary'];
-    let time = Date(forecast['time']).split(' ').slice(0, 4).join(' ');
-    this.forcast.push({
+
+  forecastSummary.forEach(forecast => {
+    const summary = forecast['summary'];
+    const time = Date(forecast['time']).split(' ').slice(0, 4).join(' ');
+
+    this.dailyForecast.push({
       'forecast': summary,
-      'time': time
+      'time': time,
     });
   });
 };
