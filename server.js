@@ -38,8 +38,8 @@ const Location = function(searchQuery, jsonData) {
   const latitude = jsonData['results'][0]['geometry']['location']['lat'];
   const longitude = jsonData['results'][0]['geometry']['location']['lng'];
 
-  this.searchQuery = searchQuery;
-  this.formattedQuery = formattedQuery;
+  this.search_query = searchQuery;
+  this.formatted_query = formattedQuery;
   this.latitude = latitude;
   this.longitude = longitude;
 };
