@@ -1,1 +1,34 @@
-# lab-06-back-end
+# LAB-06 Back End
+
+
+## Description:
+City Explorer backend app
+
+## Time Estimation
+```
+Number and name of feature: ________________________________
+
+Estimate of time needed to complete: _____
+
+Start time: _____
+
+Finish time: _____
+
+Actual time needed to complete: _____
+```
+
+## Installation:
+From the terminal, run one of the following to make a local copy:
+* ssh: `git clone git@github.com:stephenchu530/lab-06-back-end.git`
+* https: `git clone https://github.com/stephenchu530/lab-06-back-end.git`
+
+## Usage:
+* Change directory into the project directory and load `index.html` in your favorite browser.
+* Or go to: [TBD](TBD)
+
+## Credits:
+* David Marchante dmarchante](https://github.com/dmarchante)
+* Stephen Chu, [stephenchu530](https://github.com/stephenchu530)
+
+## License:
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://github.com/stephenchu530/lab-06-back-end/blob/master/LICENSE)
