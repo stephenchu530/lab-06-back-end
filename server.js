@@ -20,10 +20,10 @@ app.get('/data', (request, response) => {
     departure: Date.now(),
     canFly: true,
     pilot: 'Well Trained'
-  }
+  };
   response.status(200).json(airplanes);
 });
 
-app.use('*', (request, response) => response.send('Sorry, that route does not exist.'))
+app.use('*', (request, response) => response.send('Sorry, that route does not exist.'));
 
 app.listen(PORT,() => console.log(`Listening on port ${PORT}`));
