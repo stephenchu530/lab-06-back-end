@@ -19,9 +19,7 @@ app.get('/location', (request, response) => {
 
     response.status(200).send(locationObj);
   } catch (error) {
-    const errorResponse500 = {'status': 500, 'responseText': 'Sorry, something went wrong' };
-
-    response.status(500).send(errorResponse500);
+    errorResponse500(response);
   }
 });
 
@@ -32,9 +30,7 @@ app.get('/weather', (request, response) => {
 
     response.status(200).send(weatherObj.dailyForecast);
   } catch (error) {
-    const errorResponse500 = {'status': 500, 'responseText': 'Sorry, something went wrong' };
-
-    response.status(500).send(errorResponse500);
+    errorResponse500(response);
   }
 });
 
@@ -68,4 +64,10 @@ const Weather = function(jsonData) {
       'time': time,
     });
   });
+};
+
+const errorResponse500 = function(response) {
+  const errorResponse = {'status': 500, 'responseText': 'Sorry, something went wrong' };
+
+  response.status(500).send(errorResponse);
 };
